@@ -49,25 +49,25 @@
     <p>¡Nos vemos bajo la luna! 🌌</p>
   </div>
 
-  <script>
-    function mostrarInvitacion() {
-      const nombre = document.getElementById("nombre").value;
-      const cantidad = document.getElementById("cantidad").value;
-      if (nombre && cantidad !== "") {
-        document.querySelector(".formulario").style.display = "none";
-        document.getElementById("nombreConfirmado").textContent = nombre;
-        document.getElementById("cantidadConfirmada").textContent = cantidad;
-        document.getElementById("invitacion").style.display = "block";
-      } else {
-        alert("Por favor llena ambos campos.");
-      }
-    }
-  </script>
+ <script>
+  function mostrarInvitacion() {
+    const nombre = document.getElementById("nombre").value;
+    const cantidad = document.getElementById("cantidad").value;
+    if (nombre && cantidad !== "") {
+      document.querySelector(".formulario").style.display = "none";
+      document.getElementById("nombreConfirmado").textContent = nombre;
+      document.getElementById("cantidadConfirmada").textContent = cantidad;
+      document.getElementById("invitacion").style.display = "block";
 
-<audio autoplay loop>
-  <source src="ambientelunada.mp3" type="audio/mpeg">
-  Tu navegador no soporta el audio.
-</audio>
+      // Reproducir audio
+      const audio = new Audio('ambientelunada.mp3');
+      audio.loop = true;
+      audio.play();
+    } else {
+      alert("Por favor llena ambos campos.");
+    }
+  }
+</script>
 
 </body>
 </html>
