@@ -68,45 +68,73 @@
   </div>
 
 <script>
-  function confirmarAsistencia() {
-    const nombre = document.getElementById("nombre").value;
-    const cantidad = document.getElementById("cantidad").value;
+  const webhookURL = "https://script.google.com/macros/s/AKfycbyT9ge-DwXLtY8OaFfO5uCl4mLfbGTmLhQ-phcozv6apJe52g9odztsmmdbGJW3pjtSmQ/exec";
+
+  function mostrarInvitacion() {
+    const nombre = document.getElementById("nombre").value.trim();
+    const cantidad = document.getElementById("cantidad").value.trim();
 
     if (nombre && cantidad !== "") {
+      // Mostrar la invitación
       document.querySelector(".formulario").style.display = "none";
       document.getElementById("nombreConfirmado").textContent = nombre;
       document.getElementById("cantidadConfirmada").textContent = cantidad;
       document.getElementById("invitacion").style.display = "block";
 
-      // Reproducir audio de fondo
-      const audio = new Audio('ambientelunada.mp3');
+      // Audio
+      const audio = new Audio("ambientelunada.mp3");
       audio.loop = true;
       audio.play();
 
-      // Mostrar y reproducir video
-      const video = document.getElementById("invitacionVisual");
+      // Video
+      const video = document.getElementById("videoLunada");
       document.getElementById("videoContainer").style.display = "block";
       video.play();
 
-      // Aquí conectaremos a Google Sheets después
+      // Enviar a Google Sheets
+      fetch(webhookURL, {
+        method: "POST",
+        body: JSON.stringify({
+          nombre: nombre,
+          acompañantes: cantidad,
+          asistira: true
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     } else {
       alert("Por favor llena ambos campos.");
     }
   }
 
-  function rechazarInvitacion() {
-    const nombre = document.getElementById("nombre").value;
-
+  function mostrarNoAsistencia() {
+    const nombre = document.getElementById("nombre").value.trim();
     if (nombre) {
       document.querySelector(".formulario").style.display = "none";
-      document.getElementById("rechazo").style.display = "block";
+      document.body.innerHTML = `
+        <div style="margin-top: 25%; background-color: rgba(0,0,0,0.6); padding: 30px; border-radius: 15px;">
+          <h1 style="color: #fff8e1;">😔 Comprendemos, ${nombre}.<br>Te vamos a extrañar, será para la próxima. Cuídate mucho.</h1>
+        </div>
+      `;
 
-      // Aquí conectaremos también a Google Sheets después
+      fetch(webhookURL, {
+        method: "POST",
+        body: JSON.stringify({
+          nombre: nombre,
+          acompañantes: 0,
+          asistira: false
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     } else {
-      alert("Por favor ingresa tu nombre.");
+      alert("Por favor escribe tu nombre antes de continuar.");
     }
   }
 </script>
+
 
 </body>
 </html>
