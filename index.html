@@ -84,39 +84,39 @@
     const webhookURL = "https://script.google.com/macros/s/AKfycbyT9ge-DwXLtY8OaFfO5uCl4mLfbGTmLhQ-phcozv6apJe52g9odztsmmdbGJW3pjtSmQ/exec";
 
     function mostrarInvitacion() {
-      const nombre = document.getElementById("nombre").value.trim();
-      const cantidad = document.getElementById("cantidad").value.trim();
+  const nombre = document.getElementById("nombre").value.trim();
+  const cantidad = document.getElementById("cantidad").value.trim();
 
-      if (nombre && cantidad !== "") {
-        document.querySelector(".formulario").style.display = "none";
-        document.getElementById("nombreConfirmado").textContent = nombre;
-        document.getElementById("cantidadConfirmada").textContent = cantidad;
-        document.getElementById("invitacion").style.display = "block";
+  if (nombre && cantidad !== "") {
+    document.querySelector(".formulario").style.display = "none";
+    document.getElementById("nombreConfirmado").textContent = nombre;
+    document.getElementById("cantidadConfirmada").textContent = cantidad;
+    document.getElementById("bloqueInvitacion").style.display = "block";
 
-        const audio = new Audio("ambientelunada.mp3");
-        audio.loop = true;
-        audio.play();
+    const audio = new Audio("ambientelunada.mp3");
+    audio.loop = true;
+    audio.play();
 
-        const video = document.getElementById("videoLunada");
-        document.getElementById("videoContainer").style.display = "block";
-        video.play();
+    const video = document.getElementById("videoLunada");
+    video.play();
 
-        fetch(webhookURL, {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify({
-            nombre: nombre,
-            acompañantes: cantidad,
-            asistira: true
-          }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-      } else {
-        alert("Por favor llena ambos campos.");
+    fetch(webhookURL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        nombre: nombre,
+        acompañantes: cantidad,
+        asistira: true
+      }),
+      headers: {
+        "Content-Type": "application/json"
       }
-    }
+    });
+  } else {
+    alert("Por favor llena ambos campos.");
+  }
+}
+
 
     function mostrarNoAsistencia() {
       const nombre = document.getElementById("nombre").value.trim();
