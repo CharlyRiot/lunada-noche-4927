@@ -49,20 +49,36 @@
     <p>¡Nos vemos bajo la luna! 🌌</p>
   </div>
 
- <script>
+<div id="videoContainer" style="display:none; margin-top: 30px;">
+  <video id="videoLunada" width="80%" controls>
+    <source src="invitacionVisual.mp4" type="video/mp4">
+    Tu navegador no soporta video.
+  </video>
+</div>
+
+  
+<script>
   function mostrarInvitacion() {
     const nombre = document.getElementById("nombre").value;
     const cantidad = document.getElementById("cantidad").value;
+
     if (nombre && cantidad !== "") {
+      // Oculta formulario, muestra invitación
       document.querySelector(".formulario").style.display = "none";
       document.getElementById("nombreConfirmado").textContent = nombre;
       document.getElementById("cantidadConfirmada").textContent = cantidad;
       document.getElementById("invitacion").style.display = "block";
 
-      // Reproducir audio
+      // Reproducir audio de fondo
       const audio = new Audio('ambientelunada.mp3');
       audio.loop = true;
       audio.play();
+
+      // Mostrar y reproducir video
+      const video = document.getElementById("videoLunada");
+      document.getElementById("videoContainer").style.display = "block";
+      video.play();
+
     } else {
       alert("Por favor llena ambos campos.");
     }
