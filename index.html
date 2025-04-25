@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lunada Bajo las Estrellas</title>
   <style>
     body {
@@ -11,42 +12,44 @@
       background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
       background-size: cover;
       color: #fff8e1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       text-align: center;
     }
+
     .formulario, .invitacion, .rechazo {
-      background: rgba(0, 0, 0, 0.5);
-      margin: 50px auto;
-      padding: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 25px;
       border-radius: 15px;
       width: 90%;
-      max-width: 500px;
+      max-width: 400px;
     }
+
     input, button {
-      padding: 10px;
-      margin: 10px;
-      font-size: 1em;
+      padding: 12px;
+      margin: 8px;
+      font-size: 1.1em;
+      width: 90%;
+      max-width: 300px;
       border: none;
       border-radius: 5px;
     }
+
+    button {
+      cursor: pointer;
+    }
+
     .invitacion, .rechazo {
       display: none;
-    }
-    #videoContainer {
-      display: none;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 600px;
-    }
-    video {
-      width: 100%;
-      border-radius: 15px;
     }
   </style>
 </head>
 <body>
 
   <div class="formulario">
-    <h1>🌙 ¿Quién viene a la lunada? 🌙</h1>
+    <h2>🌙 ¿Quién viene a la lunada? 🌙</h2>
     <input type="text" id="nombre" placeholder="Tu nombre">
     <input type="number" id="cantidad" placeholder="¿Cuántos vienen contigo?" min="0">
     <br>
@@ -55,26 +58,26 @@
   </div>
 
   <div class="invitacion" id="invitacion">
-    <h1>🌕 ¡Gracias por confirmar, <span id="nombreConfirmado"></span>!</h1>
+    <h2>🌕 ¡Gracias por confirmar, <span id="nombreConfirmado"></span>!</h2>
     <p>Nos alegra saber que vendrás con <span id="cantidadConfirmada"></span> más.</p>
     <p>🗓 <strong>17 de mayo</strong> — 8:00 p.m.</p>
     <p>📍 Lugar: [Especifica el lugar aquí]</p>
-    <p>📍 No olvides traer tu casa de campaña, tu cena y desayuno</p>
-    <p>📍 ¡al medio día del domingo la comida corre por nuestra cuenta!</p>
+    <p>🏕️ No olvides traer tu casa de campaña, tu cena y desayuno</p>
+    <p>🍽️ ¡al medio día del domingo la comida corre por nuestra cuenta!</p>
     <p>🔥 ¡Habrá fogata, música y carnitas! 🎶</p>
     <p>🌌 ¡Nos vemos bajo la luna!</p>
   </div>
 
-  <div id="videoContainer">
-    <video id="videoLunada" controls>
+  <div class="rechazo" id="rechazo">
+    <h2>😔 Te vamos a extrañar…</h2>
+    <p>Será para la próxima. ¡Cuídate mucho! 💛</p>
+  </div>
+
+  <div id="videoContainer" style="display:none; margin-top: 20px;">
+    <video id="videoLunada" width="90%" controls>
       <source src="invitacionVisual.mp4" type="video/mp4">
       Tu navegador no soporta video.
     </video>
-  </div>
-
-  <div class="rechazo" id="rechazo">
-    <h1>🌙 Comprendemos, te vamos a extrañar...</h1>
-    <p>Será para la próxima. ¡Cuídate mucho! 💛</p>
   </div>
 
   <script>
@@ -100,6 +103,7 @@
 
         fetch(webhookURL, {
           method: "POST",
+          mode: "no-cors",
           body: JSON.stringify({
             nombre: nombre,
             acompañantes: cantidad,
@@ -122,6 +126,7 @@
 
         fetch(webhookURL, {
           method: "POST",
+          mode: "no-cors",
           body: JSON.stringify({
             nombre: nombre,
             acompañantes: 0,
@@ -132,7 +137,7 @@
           }
         });
       } else {
-        alert("Por favor escribe tu nombre antes de continuar.");
+        alert("Por favor escribe tu nombre.");
       }
     }
   </script>
