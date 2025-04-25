@@ -101,18 +101,19 @@
         document.getElementById("videoContainer").style.display = "block";
         video.play();
 
-        fetch(webhookURL, {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify({
-            nombre: nombre,
-            acompañantes: cantidad,
-            asistira: true
-          }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
+fetch(webhookURL, {
+  method: "POST",
+  mode: "no-cors", // ← evita el preflight
+  headers: {
+    "Content-Type": "text/plain" // ← importante: no pongas application/json
+  },
+  body: JSON.stringify({
+    nombre: nombre,
+    acompañantes: cantidad,
+    asistira: true
+  })
+});
+
       } else {
         alert("Por favor llena ambos campos.");
       }
